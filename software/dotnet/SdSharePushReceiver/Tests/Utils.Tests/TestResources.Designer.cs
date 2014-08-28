@@ -69,5 +69,21 @@ namespace Utils.Tests {
                 return ResourceManager.GetString("Triples", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ------WebKitFormBoundarysoh7g9XuBMxTzC9M
+        ///Content-Disposition: form-data; name=&quot;value&quot;; filename=&quot;triples.txt&quot;
+        ///Content-Type: text/plain
+        ///
+        ///&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://sdshare.com/unittesting/Order&gt; .
+        ///&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://sdshare.com/unittesting/order/ordernumber&gt; 1 .
+        ///&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://sdshare.com/unittesting/order/description&gt; &quot;Testing&quot; .
+        ///------WebKitFormBoundarysoh7g9XuBMxTz [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string WebKitPayload {
+            get {
+                return ResourceManager.GetString("WebKitPayload", resourceCulture);
+            }
+        }
     }
 }

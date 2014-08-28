@@ -121,4 +121,14 @@
     <value>&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://sdshare.com/unittesting/Order&gt; .
 &lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://sdshare.com/unittesting/order/description&gt; "Testing" .</value>
   </data>
+  <data name="WebKitPayload" xml:space="preserve">
+    <value>------WebKitFormBoundarysoh7g9XuBMxTzC9M
+Content-Disposition: form-data; name="value"; filename="triples.txt"
+Content-Type: text/plain
+
+&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://sdshare.com/unittesting/Order&gt; .
+&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://sdshare.com/unittesting/order/ordernumber&gt; 1 .
+&lt;http://sdshare.com/unittesting/order/1&gt; &lt;http://sdshare.com/unittesting/order/description&gt; "Testing" .
+------WebKitFormBoundarysoh7g9XuBMxTzC9M--</value>
+  </data>
 </root>

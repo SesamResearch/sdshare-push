@@ -10,7 +10,7 @@ namespace TestHost
             Console.WriteLine("Handling incoming request.");
             Console.WriteLine("Resource: {0}", resourceUri);
             Console.WriteLine("Graph: {0}", graphUri);
-            Console.WriteLine("Payload: {0}", payload);
+            Console.WriteLine("Payload: {0}", payload.ToWashedTriplePayload());
             Console.WriteLine("==== ==== ==== ==== ==== ==== ==== ====");
         }
     }
