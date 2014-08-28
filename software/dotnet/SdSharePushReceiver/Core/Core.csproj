@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ReceiverManager.cs" />
+    <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\SdShareReceiverConfigurationSection.cs" />
     <Compile Include="IFragmentReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

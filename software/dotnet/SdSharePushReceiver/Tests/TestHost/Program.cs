@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Owin.Hosting;
+using SdShare.Configuration;
 using Service.AspNetWebApi;
 
 namespace TestHost
@@ -13,11 +14,12 @@ namespace TestHost
     {
         static void Main(string[] args)
         {
-            string baseAddress = "http://localhost:9000/";
+            string baseAddress = EndpointConfiguration.BaseAddress;
 
             // Start OWIN host 
             using (WebApp.Start<SetUpConfiguration>(url: baseAddress))
             {
+                Console.WriteLine(EndpointConfiguration.GetReport());
                 Console.ReadLine(); 
             }
 

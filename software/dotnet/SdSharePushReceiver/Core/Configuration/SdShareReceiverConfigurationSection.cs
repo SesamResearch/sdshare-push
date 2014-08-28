@@ -6,6 +6,15 @@ namespace SdShare.Configuration
     {
         private const string ReceiverCollectionName = "Receivers";
 
+        [ConfigurationProperty("baseAddress", IsRequired = true)]
+        public string BaseAddress
+        {
+            get
+            {
+                return this["baseAddress"] as string;
+            }
+        }
+
         [ConfigurationProperty(ReceiverCollectionName)]
         [ConfigurationCollection(typeof(ReceiverTypeCollection), AddItemName = "add")]
         public ReceiverTypeCollection Receivers

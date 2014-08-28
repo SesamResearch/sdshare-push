@@ -30,5 +30,18 @@ namespace CoreTests.Configuration
             // Assert
             Assert.AreEqual(2, elements.Count);
         }
+
+        [TestMethod]
+        public void GetSection_HappyDays_HasExpectedBaseAddress()
+        {
+            // Arrange
+            var section = (SdShareReceiverConfigurationSection)ConfigurationManager.GetSection("SdShareReceiverConfigurationSection");
+
+            // Act
+            var baseAdress = section.BaseAddress;
+
+            // Assert
+            Assert.AreEqual("http://localhost:9000/", baseAdress);
+        }
     }
 }

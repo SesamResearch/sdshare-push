@@ -9,7 +9,7 @@ namespace Service.AspNetWebApi
         public async void Post(string resource, string graph)
         {
             var body = await Request.Content.ReadAsStringAsync();
-            foreach (var receiver in ReceiverManager.GetReceivers(graph))
+            foreach (var receiver in EndpointConfiguration.GetConfiguredReceivers(graph))
             {
                 receiver.Receive(resource, graph, body);
             }
