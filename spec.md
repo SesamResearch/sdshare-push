@@ -1,32 +1,26 @@
 
-SDShare push
+SDShare Push
 ============
-
-An initial informal specification to make it clearer for ourselves
-what we are talking about.
 
 Introduction
 ------------
 
 SDShare push is a very simple, lightweight protocol that allows
-clients to push fragments to a receiver. This allows data to be
+a generic client to push fragments to a receiver. This allows data to be
 transferred to just about any kind of service, simply by pointing the
-SDShare client at an SDShare push endpoint.
+SDShare client at an SDShare push endpoint. 
 
-The protocol is currently implemented by the following Sesam
-components:
-
- * metadata-translator
- * solr-receiver
-
-More are likely to follow.
+This document describes the REST interface that a receiver service should
+implement.
 
 Interface
 ---------
 
-The interface is as simple as could be: the SDShare push service has a
-base endpoint (that is, a URL you can reach it at). To transfer a
-fragment, send an HTTP POST request to that URL with two parameters:
+The interface is as simple as could be: the SDShare Push Receiver has a
+base endpoint (that is, a URL you can reach it at). 
+
+To transfer a fragment, send an HTTP POST request to that URL with two 
+URI parameters:
 
  * `resource`: The URI of the resource represented by the fragment.
    Required.
