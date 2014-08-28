@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Owin.Hosting;
 using SdShare.Configuration;
-using Service.AspNetWebApi;
+using SdShare.Service.AspNetWebApi;
 
 namespace TestHost
 {

@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Owin;
 
-namespace Service.AspNetWebApi
+namespace SdShare.Service.AspNetWebApi
 {
     public class SetUpConfiguration
     {
