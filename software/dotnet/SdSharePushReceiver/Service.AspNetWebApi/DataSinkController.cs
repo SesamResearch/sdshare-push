@@ -9,9 +9,10 @@ namespace SdShare.Service.AspNetWebApi
         public async void Post(string resource, string graph)
         {
             var body = await Request.Content.ReadAsStringAsync();
+            var triples = body.ToWashedTriplePayload();
             foreach (var receiver in EndpointConfiguration.GetConfiguredReceivers(graph))
             {
-                receiver.Receive(resource, graph, body);
+                receiver.Receive(resource, graph, triples);
             }
         }
     }
