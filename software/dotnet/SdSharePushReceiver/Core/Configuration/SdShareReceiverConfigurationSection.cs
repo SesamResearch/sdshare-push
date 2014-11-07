@@ -6,12 +6,12 @@ namespace SdShare.Configuration
     {
         private const string ReceiverCollectionName = "Receivers";
 
-        [ConfigurationProperty("baseAddress", IsRequired = true)]
-        public string BaseAddress
+        [ConfigurationProperty("port", IsRequired = true)]
+        public string Port
         {
             get
             {
-                return this["baseAddress"] as string;
+                return this["port"] as string;
             }
         }
 

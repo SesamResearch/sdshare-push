@@ -32,16 +32,16 @@ namespace CoreTests.Configuration
         }
 
         [TestMethod]
-        public void GetSection_HappyDays_HasExpectedBaseAddress()
+        public void GetSection_HappyDays_HasExpectedPort()
         {
             // Arrange
             var section = (SdShareReceiverConfigurationSection)ConfigurationManager.GetSection("SdShareReceiverConfigurationSection");
 
             // Act
-            var baseAdress = section.BaseAddress;
+            var port = section.Port;
 
             // Assert
-            Assert.AreEqual("http://localhost:9000/", baseAdress);
+            Assert.AreEqual("9000", port);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace SdShare.Configuration
@@ -36,7 +37,7 @@ namespace SdShare.Configuration
         {
             var sb = new StringBuilder();
             sb.AppendLine("=== SDShare Push Receiver Endpoint ===");
-            sb.AppendFormat("Base address is: {0}\r\n", BaseAddress);
+            sb.AppendFormat("Base address is: {0}\r\n", Port);
             sb.AppendLine("Configured receivers are:");
             foreach (ReceiverTypeElement receiver in _configSection.Receivers)
             {
@@ -48,15 +49,30 @@ namespace SdShare.Configuration
             return sb.ToString();
         }
 
-        public static string BaseAddress
+        public static string Port
         {
             get
             {
                 InitializeFromConfig();
-                return _configSection.BaseAddress;
+                return _configSection.Port;
             }
         }
 
+        public static IEnumerable<string> Addresses
+        {
+            get
+            {
+                var entry = Dns.GetHostEntry(Dns.GetHostName());
+
+                return new List<string>
+                {
+                    string.Format("http://localhost:{0}/", Port),
+                    string.Format("http://127.0.0.1:{0}/", Port),
+                    string.Format("http://{0}:{1}/", Dns.GetHostName(),Port),
+                    string.Format("http://{0}:{1}/", entry.HostName, Port)
+                };
+            }
+        }
 
         private static void InitializeFromConfig()
         {

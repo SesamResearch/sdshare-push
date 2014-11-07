@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SdShare.Configuration;
 using TestUtils;
@@ -36,13 +34,31 @@ namespace CoreTests.Configuration
         }
 
         [TestMethod]
-        public void BaseAddress_IsConfigured_GetsExpectedEndpointAddress()
+        public void Port_IsConfigured_GetsExpectedPort()
         {
             // Act
-            var baseAddress = EndpointConfiguration.BaseAddress;
+            var port = EndpointConfiguration.Port;
 
             // Assert
-            Assert.AreEqual("http://localhost:9000/", baseAddress);
+            Assert.AreEqual("9000", port);
+        }
+
+        [TestMethod]
+        public void Addresses_IsConfigured_GetsExpectedAddresses()
+        {
+            // Arrange
+            var machineName = Dns.GetHostName();
+            var entry = Dns.GetHostEntry(machineName);
+
+            // Act
+            var adresses = EndpointConfiguration.Addresses.ToList();
+
+            // Assert
+            Assert.AreEqual(4, adresses.Count);
+            Assert.IsTrue(adresses.Any(a => a.Contains("localhost:")));
+            Assert.IsTrue(adresses.Any(a => a.Contains("127.0.0.1:")));
+            Assert.IsTrue(adresses.Any(a => a.Contains(machineName + ":")));
+            Assert.IsTrue(adresses.Any(a => a.Contains(entry.HostName)));
         }
     }
 }
