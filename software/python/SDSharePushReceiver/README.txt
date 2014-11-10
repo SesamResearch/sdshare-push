@@ -22,7 +22,7 @@ To run
 
   * sdsharepushreceiver
 
-The server is running at the port 6547 by default. You can modify the port by command line options.
+The server is running at the port 6543 by default. You can modify the port by command line options.
 Run it with --help to see all options.
 
 You can do manual tests by posting NTriples using the form found at: http://localhost:6543/form
