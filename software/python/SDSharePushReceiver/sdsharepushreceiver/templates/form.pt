@@ -1,0 +1,17 @@
+<html xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal">
+    <head>
+        <title>${title}</title>
+    </head>
+    <body>
+        <form id="graph_form" method="POST" action="/">
+          Resource:<br>
+          <input type="text" size="120" name="resource"/><br>
+          Graph:<br>
+          <input type="text" size="120" name="graph"/><br>
+          NTriples:<br>
+          <textarea rows="40" cols="120" name="content"></textarea><br>
+          <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>
