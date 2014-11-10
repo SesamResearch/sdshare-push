@@ -85,15 +85,15 @@ def main():
     """ Create a SDShare Push Receiver server and run it forever until stopped """
     
     # Parse arguments
-    parser = argparse.ArgumentParser(description="SDShare Post Receiver")
+    parser = argparse.ArgumentParser(description="SDShare Push Receiver")
     parser.add_argument("-i", "--interface", dest="interface",
                         help="Interface bind to, default is 127.0.0.1", default="127.0.0.1")    
     parser.add_argument("-p", "--port", type=int, dest="port",
                         help="IP port to bind to, default is 6543", metavar="PORT", default="6543")
     parser.add_argument("-l", "--loglevel", dest="loglevel",
                         help="Loglevel (INFO, DEBUG, WARN..), default is INFO", metavar="LOGLEVEL", default="INFO")
-    parser.add_argument("-f", "--logfile", dest="logfile", default="sdsharepostreceiver.log",
-                        help="Filename to log to if logging to file, the default is 'sdsharepostreceiver.log' in the current directory")
+    parser.add_argument("-f", "--logfile", dest="logfile", default="sdsharepushreceiver.log",
+                        help="Filename to log to if logging to file, the default is 'sdsharepushreceiver.log' in the current directory")
 
     options = parser.parse_args()
 
