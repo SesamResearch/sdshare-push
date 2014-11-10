@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
+    <display-name>SDS receiver</display-name>
+    <description>
+        An SDShare push receiver for developer workshop
+    </description>
+
+    <servlet>
+        <servlet-name>PushReceiver</servlet-name>
+        <servlet-class>
+            no.bouvet.sesam.sdshare.PushReceiverServlet
+        </servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PushReceiver</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

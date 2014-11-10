@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>no.bouvet.sesam.sdshare</groupId>
+    <artifactId>sample-receiver</artifactId>
+    <packaging>war</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>SDShare push receiver</name>
+    <description>Task for developer course.</description>
+    <url>https://github.com/SesamResearch/sdshare-push/tree/master/software/java</url>
+    <parent>
+        <groupId>no.bouvet.sesam.sdshare</groupId>
+        <artifactId>receivers-parent</artifactId>
+        <version>0.2.4</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- PROVIDED DEPENDENCIES -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <!-- servlet container provides it, so no need to include in .war -->
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>sdshare-push-receiver</finalName>
+    </build>
+
+</project>
