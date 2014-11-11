@@ -10,16 +10,12 @@
     <name>SDShare push receiver</name>
     <description>Task for developer course.</description>
     <url>https://github.com/SesamResearch/sdshare-push/tree/master/software/java</url>
-    <parent>
-        <groupId>no.bouvet.sesam.sdshare</groupId>
-        <artifactId>receivers-parent</artifactId>
-        <version>0.2.4</version>
-    </parent>
 
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
         </dependency>
 
         <!-- PROVIDED DEPENDENCIES -->
