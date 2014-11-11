@@ -48,3 +48,8 @@ software/java/target/sdshare-push-receiver/WEB-INF/lib/logback-core-1.1.1.jar
 software/java/target/sdshare-push-receiver/WEB-INF/lib/slf4j-api-1.7.6.jar
 software/java/target/sdshare-push-receiver/WEB-INF/web.xml
 software/java/target/sdshare-push-receiver/index.html
+software/java/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_2.xml
+software/java/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_2.xml
+software/java/logs/sds-receiver.log
+software/java/target/sdshare-push-receiver/WEB-INF/lib/logback-classic-1.1.2.jar
+software/java/target/sdshare-push-receiver/WEB-INF/lib/logback-core-1.1.2.jar
