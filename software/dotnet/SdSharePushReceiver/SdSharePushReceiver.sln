@@ -21,6 +21,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.AspNetWebApi.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Tests", "Tests\Utils.Tests\Utils.Tests.csproj", "{EBFD5593-8D43-491F-B35D-7D88E03CE25A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceRunner", "ConsoleApplication1\ServiceRunner.csproj", "{ED98607D-ADB9-4AE2-A250-B5590866A1FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8D2AE1BD-26FF-4D45-B4DF-37E8BF1E565E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +68,10 @@ Global
 		{EBFD5593-8D43-491F-B35D-7D88E03CE25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBFD5593-8D43-491F-B35D-7D88E03CE25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBFD5593-8D43-491F-B35D-7D88E03CE25A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED98607D-ADB9-4AE2-A250-B5590866A1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED98607D-ADB9-4AE2-A250-B5590866A1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED98607D-ADB9-4AE2-A250-B5590866A1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED98607D-ADB9-4AE2-A250-B5590866A1FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

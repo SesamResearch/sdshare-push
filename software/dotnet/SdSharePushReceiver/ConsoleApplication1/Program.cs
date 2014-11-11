@@ -17,15 +17,13 @@ namespace ServiceRunner
             options.Urls.Add(string.Format("http://127.0.0.1:{0}/", port));
             var entry = Dns.GetHostEntry(Dns.GetHostName());
             options.Urls.Add(string.Format("http://{0}:{1}/", entry.HostName, port));
-            
+
             // Start OWIN host 
             using (WebApp.Start<SetUpConfiguration>(options))
             {
                 Console.WriteLine(EndpointConfiguration.GetReport());
-                Console.ReadLine(); 
+                Console.ReadLine();
             }
-
-
         }
     }
 }
