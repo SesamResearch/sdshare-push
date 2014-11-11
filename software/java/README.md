@@ -8,4 +8,4 @@ Replace expressions in angle brackets with actual paths on your system. Replace 
 
 It would be possible to run servlet with following command: `java -jar <PATH_TO_JETTY_RUNNER>/jetty-runner.jar --port <PORT_NUMBER> <PATH_TO_REPO>/sdshare-push/software/java/target/sdshare-push-receiver.war`
 
-To post triples to the endpoint (is expected to be executed from the root folder of the repository, `sdshare-push`): `curl -X POST 'http://localhost:<PORT_NUMBER>/?graph=<GRAPH_NAME>&resource=<RESOURCE_NAME>' -H 'Content-type: <CONTENT_TYPE>' --data-binary @software/python/SDSharePushReceiver/sdsharepushreceiver/testdata/test.nt`
+To post triples to the endpoint (is expected to be executed from the root folder of the repository, `sdshare-push` ): `curl -X POST 'http://localhost:<PORT_NUMBER>/?graph=<GRAPH_NAME>&resource=<RESOURCE_NAME>' -H 'Content-type: <CONTENT_TYPE>' --data-binary @software/python/SDSharePushReceiver/sdsharepushreceiver/testdata/test.nt`
