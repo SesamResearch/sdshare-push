@@ -38,10 +38,16 @@ public class PushReceiverServlet extends HttpServlet {
         String graph = req.getParameter("graph");
         String resource = req.getParameter("resource");
         String contType = req.getHeader("Content-type");
-        
-        log.trace("Got resource={}, graph={}", resource, graph);
-        log.trace("Content-type: {}", contType);
-        
+        String line = null;
+
+        log.trace(String.format("Got resource=%s, graph=%s", resource, graph));
+        log.trace(String.format("Content-type: %s", contType));
+
+        log.trace("Dumping N3 file");
+        while (( line = ntriples.readLine()) != null)
+            log.trace(line);
+        log.trace("Done dumping N3 file");
+
         return new SDSRequest(graph, resource, contType, ntriples);
     }
 }
