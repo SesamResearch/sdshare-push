@@ -1,7 +1,7 @@
 ﻿using System;
 using SdShare;
 
-namespace ServiceRunner
+namespace TestHost
 {
     public class MyReceiver : IFragmentReceiver
     {
