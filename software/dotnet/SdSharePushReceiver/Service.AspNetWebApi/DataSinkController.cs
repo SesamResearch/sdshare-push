@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Threading.Tasks;
+using System.Web.Http;
 using SdShare.Configuration;
 
 namespace SdShare.Service.AspNetWebApi
@@ -6,13 +8,21 @@ namespace SdShare.Service.AspNetWebApi
     public class DataSinkController : ApiController
     {
         [HttpPost]
-        public async void Post(string resource, string graph)
+        public async Task<IHttpActionResult> Post(string resource, string graph)
         {
-            var body = await Request.Content.ReadAsStringAsync();
-            var triples = body.ToWashedTriplePayload();
-            foreach (var receiver in EndpointConfiguration.GetConfiguredReceivers(graph))
+            try
             {
-                receiver.Receive(resource, graph, triples);
+                var body = await Request.Content.ReadAsStringAsync();
+                foreach (var receiver in EndpointConfiguration.GetConfiguredReceivers(graph))
+                {
+                    receiver.Receive(resource, graph, body);
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
             }
         }
     }
