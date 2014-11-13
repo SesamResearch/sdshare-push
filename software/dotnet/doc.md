@@ -16,7 +16,7 @@ Configuration
 -------------
 ssad
 
-'
+```xml
 <SdShareReceiverConfigurationSection port="9001">
     <Receivers>
         <add name="MyReceiver" type="TestHost.MyReceiver, MyAssembly" 
@@ -27,7 +27,7 @@ ssad
            graph="http://acme.com/some-graph" />
     </Receivers>
 </SdShareReceiverConfigurationSection>
-'
+```
 
 asdsa
 
