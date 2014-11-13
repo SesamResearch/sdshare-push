@@ -1,7 +1,9 @@
-﻿namespace SdShare
+﻿using System.Collections.Generic;
+
+namespace SdShare
 {
     public interface IFragmentReceiver
     {
-        void Receive(string resourceUri, string graphUri, string payload);
+        void Receive(IEnumerable<string> resources, string graphUri, string payload);
     }
 }

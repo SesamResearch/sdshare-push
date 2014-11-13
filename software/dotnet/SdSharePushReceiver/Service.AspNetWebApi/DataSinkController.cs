@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using SdShare.Configuration;
 
 namespace SdShare.Service.AspNetWebApi
@@ -8,7 +11,7 @@ namespace SdShare.Service.AspNetWebApi
     public class DataSinkController : ApiController
     {
         [HttpPost]
-        public async Task<IHttpActionResult> Post(string resource, string graph)
+        public async Task<IHttpActionResult> Post([ModelBinder]List<string> resource, string graph)
         {
             try
             {

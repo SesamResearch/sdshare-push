@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using SdShare;
 
 namespace ServiceRunner
 {
     public class MyReceiver : IFragmentReceiver
     {
-        public void Receive(string resourceUri, string graphUri, string payload)
+        public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
             Console.WriteLine("Handling incoming request.");
-            Console.WriteLine("Resource: {0}", resourceUri);
+            Console.WriteLine("Resource: {0}", resources.Aggregate(new StringBuilder(), (sb, r) =>
+            {
+                sb.AppendFormat("{0} ", r);
+                return sb;
+            }));
+
             Console.WriteLine("Graph: {0}", graphUri);
 
             if (string.IsNullOrWhiteSpace(payload))

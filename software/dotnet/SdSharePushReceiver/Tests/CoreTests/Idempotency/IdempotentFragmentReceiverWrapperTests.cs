@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -39,7 +40,7 @@ namespace CoreTests.Idempotency
             var expiration = TimeSpan.FromSeconds(2);
             const CacheMethod cacheMethod = CacheMethod.Memory;
             var wrapper = new IdempotentFragmentReceiverWrapper(_receiverMock.Object, expiration, cacheMethod);
-            const string resourceUri = "http://resourceUri";
+            var resourceUri = new List<string> {"http://resourceUri"};
             const string graphUri = "http://graphUri";
 
             var payload = Resources.Triples.Replace("Kristin", GetRandomString());
@@ -58,7 +59,7 @@ namespace CoreTests.Idempotency
             var expiration = TimeSpan.FromSeconds(2);
             const CacheMethod cacheMethod = CacheMethod.Memory;
             var wrapper = new IdempotentFragmentReceiverWrapper(_receiverMock.Object, expiration, cacheMethod);
-            const string resourceUri = "http://resourceUri";
+            var resourceUri = new List<string> { "http://resourceUri" };
             const string graphUri = "http://graphUri";
 
             var payload = Resources.Triples.Replace("Kristin", GetRandomString());
@@ -78,7 +79,7 @@ namespace CoreTests.Idempotency
             var expiration = TimeSpan.FromSeconds(2);
             const CacheMethod cacheMethod = CacheMethod.Memory;
             var wrapper = new IdempotentFragmentReceiverWrapper(_receiverMock.Object, expiration, cacheMethod);
-            const string resourceUri = "http://resourceUri";
+            var resourceUri = new List<string> { "http://resourceUri" };
             const string graphUri = "http://graphUri";
 
             var payload = Resources.Triples.Replace("Kristin", GetRandomString());

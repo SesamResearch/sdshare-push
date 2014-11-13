@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
+using System.Text;
 
 namespace SdShare.Idempotency
 {
@@ -24,12 +27,12 @@ namespace SdShare.Idempotency
             }
         }
 
-        public void Receive(string resourceUri, string graphUri, string payload)
+        public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
-            var key = GetKey(resourceUri, graphUri, payload);
+            var key = GetKey(resources, graphUri, payload);
             if (!IsInCache(key))
             {
-                _wrappedReceiver.Receive(resourceUri, graphUri, payload);
+                _wrappedReceiver.Receive(resources, graphUri, payload);
             }
         }
 
@@ -53,12 +56,22 @@ namespace SdShare.Idempotency
             }
         }
 
-        private string GetKey(string resourceUri, string graphUri, string payload)
+        private string GetKey(IEnumerable<string> resources, string graphUri, string payload)
         {
+            var rsrc = resources == null
+                ? string.Empty
+                : resources.OrderBy(r => r).Aggregate(
+                    new StringBuilder(),
+                    (sb, r) =>
+                    {
+                        sb.Append(r);
+                        return sb;
+                    }).ToString();
+
             var s = string.Format("{0}{1}{2}",
                 payload ?? string.Empty,
                 graphUri ?? string.Empty,
-                resourceUri ?? string.Empty);
+                rsrc);
 
             return s.GetHashCode().ToString();
         }
