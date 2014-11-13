@@ -8,11 +8,6 @@ namespace SdShare.Service.AspNetWebApi
     {
         public ICollection<Assembly> GetAssemblies()
         {
-            //var baseAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            //var controllersAssembly = typeof(DataSinkController).Assembly;
-            //baseAssemblies.Add(controllersAssembly);
-            //return baseAssemblies;
-
             return new List<Assembly> {typeof (DataSinkController).Assembly};
         }
     }
