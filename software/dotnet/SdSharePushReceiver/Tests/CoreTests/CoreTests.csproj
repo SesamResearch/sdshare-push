@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Configuration\EndpointConfigurationTests.cs" />
     <Compile Include="Configuration\SdShareReceiverConfigurationSectionTests.cs" />
+    <Compile Include="FragmentReceiverBaseTests.cs" />
     <Compile Include="Idempotency\HowDoesHashCodingWork.cs" />
     <Compile Include="Idempotency\IdempotentFragmentReceiverWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +57,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Stubs\StubFragmentReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.csproj">

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\SdShareReceiverConfigurationSection.cs" />
+    <Compile Include="FragmentReceiverBase.cs" />
     <Compile Include="Idempotency\CacheMethod.cs" />
     <Compile Include="Idempotency\IdempotentFragmentReceiverWrapper.cs" />
     <Compile Include="IFragmentReceiver.cs" />
