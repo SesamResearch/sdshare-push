@@ -8,9 +8,17 @@ Features
 * Configurable support for idempotency
 * Support for simple hosting using ASP.NET Web API and OWIN
 
-IFragmentReceiver
------------------
+IFragmentReceiver and FragmentReceiverBase
+------------------------------------------
 The core functionalty of the framework is to provide the abstraction *SdShare.IFragmentReceiver* as well as configuration functionality. In other words, you as a developer utilise this framework by writing classes that implement *IFragmentReceiver*, and then plugging them into a host through configuration.
+
+The framework contains the abstract base class *FragmentReceiverBase* which implements *IFragmentReceiver*. Developers can choose to extend this base class instead of implementing *IFragmentReceiver* directly, and the following functionality and extension points will then be provided:
+
+* __Missing resource__ The resource parameter is mandatory, and if it is missing, an exception will be thrown automatically.
+* __Resource validation__ For every resource specified in the url, the existance of corresponding triples with the resource as subject is checked in the body of he request. If no such subject can be found, an exception is raised.
+* __SupportsBatching__. By impleneting this boolean property, the receiver indicates whether batching is supported. If batching is not supported, an exception will autmatically be thrown if the url contains more that one resource parameter.
+* __Deletion__. If the body of the message is empty (string.IsNullOrWhiteSpace), all resources specified in the url should be deleted. The receiver will then receive a call to the DeleteResource for each resource.
+
 
 Projects and assemblies
 -----------------------
@@ -62,7 +70,7 @@ The code snippet below shows how you can utilise the functionality of *SdShare.S
 
 The host will automatically listen to the url http://localhost:9001 (given that the port 9001 is configured in the xml config). A sample of a valid url would the be:
 
-__http://localhost:9001/?resource=http://myresource&resource=http://myotherresource&graph=http://mygraph__
+__POST http://localhost:9001/?resource=http://myresource&resource=http://myotherresource&graph=http://mygraph__
 
 ```C#
 using Microsoft.Owin.Hosting;
