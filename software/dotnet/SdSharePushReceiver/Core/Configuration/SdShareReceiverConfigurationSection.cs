@@ -58,5 +58,26 @@ namespace SdShare.Configuration
             get { return (string)this["graph"]; }
             set { this["graph"] = value; }
         }
+
+        [ConfigurationProperty("idempotent", IsRequired = false)]
+        public bool Idempotent
+        {
+            get { return (bool)this["idempotent"]; }
+            set { this["idempotent"] = value; }
+        }
+
+        [ConfigurationProperty("idempotencyCacheStrategy", IsRequired = false)]
+        public string IdempotencyCacheStrategy
+        {
+            get { return (string) this["idempotencyCacheStrategy"]; }
+            set { this["idempotencyCacheStrategy"] = value; }
+        }
+
+        [ConfigurationProperty("idempotencyCacheExpirationSpan", IsRequired = false)]
+        public string IdempotencyCacheExpirationSpan
+        {
+            get { return (string) this["idempotencyCacheExpirationSpan"]; }
+            set { this["idempotencyCacheExpirationSpan"] = value; }
+        }
     }
 }

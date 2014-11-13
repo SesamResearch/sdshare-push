@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SdShare.Configuration;
+using SdShare.Idempotency;
 using TestUtils;
 
 namespace CoreTests.Configuration
@@ -31,6 +32,18 @@ namespace CoreTests.Configuration
             Assert.AreEqual(2, receivers.Count());
             Assert.IsTrue(receivers.Any(r => typeof(StubFragmentReceiverTypeA) == r.GetType()));
             Assert.IsTrue(receivers.Any(r => typeof(StubFragmentReceiverTypeB) == r.GetType()));
+        }
+
+        [TestMethod]
+        public void GetReceivers_WithIdempotentReceiver_GetsExpectedReceivers()
+        {
+            // Act
+            var receivers = EndpointConfiguration.GetConfiguredReceivers("http://test/graph/idempotent");
+
+            // Assert
+            Assert.AreEqual(2, receivers.Count());
+            Assert.IsTrue(receivers.Any(r => typeof(StubFragmentReceiverTypeA) == r.GetType()));
+            Assert.IsTrue(receivers.Any(r => typeof(IdempotentFragmentReceiverWrapper) == r.GetType()));
         }
 
         [TestMethod]

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
+using SdShare.Idempotency;
 
 namespace SdShare.Configuration
 {
@@ -14,6 +15,9 @@ namespace SdShare.Configuration
         private static readonly object SyncLock = new object();
         private static Dictionary<string, List<IFragmentReceiver>> _receivers;
         private static SdShareReceiverConfigurationSection _configSection;
+
+        private static readonly TimeSpan DefaultExpiration = TimeSpan.FromHours(1);
+        private const CacheMethod DefaultCacheMethod = Idempotency.CacheMethod.Memory;
 
         public static IEnumerable<IFragmentReceiver> GetConfiguredReceivers(string graphUri)
         {
@@ -119,9 +123,41 @@ namespace SdShare.Configuration
                             throw new ConfigurationErrorsException(string.Format("Unknown type: {0}", each.Type));
                         }
 
-                        list.Add((IFragmentReceiver)Activator.CreateInstance(type));
+                        var receiver = (IFragmentReceiver) Activator.CreateInstance(type);
+                        if (each.Idempotent)
+                        {
+                            var expiration = GetExpiration(each);
+                            var cacheMethod = GetCacheMethod(each);
+                            var wrapper = new IdempotentFragmentReceiverWrapper(receiver, expiration, cacheMethod);
+                            list.Add(wrapper);
+                        }
+                        else
+                        {
+                            list.Add(receiver);
+                        }
+
+                        
                         return map;
                     });
+        }
+
+        private static TimeSpan GetExpiration(ReceiverTypeElement configElement)
+        {
+            return string.IsNullOrWhiteSpace(configElement.IdempotencyCacheExpirationSpan) 
+                ? DefaultExpiration 
+                : TimeSpan.Parse(configElement.IdempotencyCacheExpirationSpan);
+        }
+
+        private static CacheMethod GetCacheMethod(ReceiverTypeElement configElement)
+        {
+            if (string.IsNullOrWhiteSpace(configElement.IdempotencyCacheStrategy))
+            {
+                return DefaultCacheMethod;
+            }
+
+            return configElement.IdempotencyCacheStrategy.ToLower().StartsWith("memory")
+                ? CacheMethod.Memory
+                : CacheMethod.File;
         }
     }
 }
