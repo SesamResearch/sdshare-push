@@ -13,16 +13,20 @@ namespace SdShare.Service.AspNetWebApi
             // Configure Web API for self-host. 
             var config = new HttpConfiguration();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
-
             config.Routes.MapHttpRoute(
                 "DefaultApi",
                 "",
                 new { controller = "DataSink", action = "Post" });
+
+            config.Routes.MapHttpRoute(
+                "PingRoute",
+                "ping",
+                new { controller = "Ping", action = "Ping" });
+
+            config.Routes.MapHttpRoute(
+                "DocRoute",
+                "doc",
+                new { controller = "Ping", action = "Doc" });
 
             config.Services.Replace(typeof(IAssembliesResolver), new SdShareWebApiAssemblyResolver());
 

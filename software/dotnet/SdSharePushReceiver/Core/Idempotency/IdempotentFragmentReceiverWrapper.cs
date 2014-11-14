@@ -36,6 +36,11 @@ namespace SdShare.Idempotency
             }
         }
 
+        public IFragmentReceiver WrappedReceiver
+        {
+            get { return _wrappedReceiver; }
+        }
+
         private bool IsInCache(string key)
         {
             if (_cache.Contains(key))

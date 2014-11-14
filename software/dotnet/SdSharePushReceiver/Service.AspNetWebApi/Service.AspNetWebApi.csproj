@@ -74,7 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\SdShareWebApiSection.cs" />
     <Compile Include="DataSinkController.cs" />
+    <Compile Include="PingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SdShareWebApiAssemblyResolver.cs" />
     <Compile Include="SetUpConfiguration.cs" />

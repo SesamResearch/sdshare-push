@@ -64,6 +64,42 @@ The functionality is configured via standard xml configuration that is localised
 * __add.idempotencyCacheStrategy__ Is only used if add.idempotent == true. The two possible values are *file* and *memory*. Defaults to *memory* if not included.
 * __add.idempotencyCacheExpirationSpan__ Specifies the duration that idempotency cache should retain each message. Defaults to one hour (*01:00:00*) if not included.
 
+Enpoints
+--------
+The following endpoints are available
+* __POST http://localhost:9001/?resource=r&graph=g__ See below
+* __GET http://localhost:9001/ping__ Returns the string *Ping received. All is well.*
+* __GET http.//localhost:9001/doc__ Returns a json structure that documents the configured urls and receivers as well as some simple diagnostics. Here's a sample of such a structure:
+
+```Json
+{
+    "Endpoint": {
+        "Port": 9001,
+        "Addresses": [
+            "http://localhost:9001/",
+            "http://127.0.0.1:9001/",
+            "http://KONSULE-UHROD2E:9001/",
+            "http://KONSULE-UHROD2E.computas.int:9001/"
+        ],
+        "Receivers": [
+            {
+                "Graph": "##ALL##",
+                "Type": "TestHost.MyReceiver, TestHost, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "Idempotent": true,
+                "IdempotencyCacheExpiration": null,
+                "IdempotencyCacheMethod": null
+            }
+        ]
+    },
+    "Diagnostics": {
+        "StartTimeUtc": "2014-11-14T19:35:04.6000785Z",
+        "RequestCount": 0,
+        "ResourceCount": 0,
+        "ErrorCount": 0
+    }
+}
+```
+
 Hosting
 -------
 The code snippet below shows how you can utilise the functionality of *SdShare.Service.AspNetWebApi.dll* inside of your host application in order to spin up the push receiver.

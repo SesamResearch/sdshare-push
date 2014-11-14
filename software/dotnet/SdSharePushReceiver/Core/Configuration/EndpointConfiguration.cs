@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
+using SdShare.Diagnostics;
+using SdShare.Documentation;
 using SdShare.Idempotency;
 
 namespace SdShare.Configuration
@@ -35,6 +37,26 @@ namespace SdShare.Configuration
             }
 
             return recs;
+        }
+
+        public static StatusDocumentation GetDocumentation()
+        {
+            return new StatusDocumentation
+            {
+                Endpoint = new EndpointDocumentation
+                {
+                    Port = int.Parse(Port),
+                    Addresses = Addresses,
+                    Receivers = GetReceiverDocumentations()
+                },
+                Diagnostics = new DiagnosticsDocumentation
+                {
+                    ErrorCount = DiagnosticData.ErrorCount,
+                    RequestCount = DiagnosticData.RequestCount,
+                    ResourceCount = DiagnosticData.ResourceCount,
+                    StartTimeUtc = DiagnosticData.StartTimeUtc
+                }
+            };
         }
 
         public static string GetReport()
@@ -126,9 +148,9 @@ namespace SdShare.Configuration
                         var receiver = (IFragmentReceiver) Activator.CreateInstance(type);
                         if (each.Idempotent)
                         {
-                            var expiration = GetExpiration(each);
+                            var cacheExpiration = GetExpiration(each);
                             var cacheMethod = GetCacheMethod(each);
-                            var wrapper = new IdempotentFragmentReceiverWrapper(receiver, expiration, cacheMethod);
+                            var wrapper = new IdempotentFragmentReceiverWrapper(receiver, cacheExpiration, cacheMethod);
                             list.Add(wrapper);
                         }
                         else
@@ -140,7 +162,6 @@ namespace SdShare.Configuration
                         return map;
                     });
         }
-
         private static TimeSpan GetExpiration(ReceiverTypeElement configElement)
         {
             return string.IsNullOrWhiteSpace(configElement.IdempotencyCacheExpirationSpan) 
@@ -158,6 +179,31 @@ namespace SdShare.Configuration
             return configElement.IdempotencyCacheStrategy.ToLower().StartsWith("memory")
                 ? CacheMethod.Memory
                 : CacheMethod.File;
+        }
+
+        private static IEnumerable<ReceiverDocumentation> GetReceiverDocumentations()
+        {
+            return _receivers.Aggregate(
+                new List<ReceiverDocumentation>(),
+                (accumulator, eachPair) =>
+                {
+                    foreach (var receiver in eachPair.Value)
+                    {
+                        var rcr = receiver;
+                        var doc = new ReceiverDocumentation {Graph = eachPair.Key};
+                        if (typeof (IdempotentFragmentReceiverWrapper) == receiver.GetType())
+                        {
+                            doc.Idempotent = true;
+                            rcr = ((IdempotentFragmentReceiverWrapper)receiver).WrappedReceiver;
+                        }
+
+                        doc.Type = rcr.GetType().AssemblyQualifiedName;
+                        accumulator.Add(doc);
+                    }
+
+                    return accumulator;
+                });
+
         }
     }
 }
