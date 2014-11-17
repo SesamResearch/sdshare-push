@@ -67,11 +67,16 @@ namespace CoreTests.Configuration
             var adresses = EndpointConfiguration.Addresses.ToList();
 
             // Assert
-            Assert.AreEqual(4, adresses.Count);
+            Assert.IsTrue(adresses.Count>=4);
             Assert.IsTrue(adresses.Any(a => a.Contains("localhost:")));
             Assert.IsTrue(adresses.Any(a => a.Contains("127.0.0.1:")));
             Assert.IsTrue(adresses.Any(a => a.Contains(machineName + ":")));
             Assert.IsTrue(adresses.Any(a => a.Contains(entry.HostName)));
+
+            foreach (var adress in adresses)
+            {
+                Console.WriteLine(adress);
+            }
         }
     }
 }

@@ -78,16 +78,16 @@ The following endpoints are available
         "Addresses": [
             "http://localhost:9001/",
             "http://127.0.0.1:9001/",
-            "http://KONSULE-UHROD2E:9001/",
-            "http://KONSULE-UHROD2E.computas.int:9001/"
+            "http://my-server:9001/",
+            "http://my-server.domain.int:9001/"
         ],
         "Receivers": [
             {
                 "Graph": "##ALL##",
                 "Type": "TestHost.MyReceiver, TestHost, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "Idempotent": true,
-                "IdempotencyCacheExpiration": null,
-                "IdempotencyCacheMethod": null
+                "IdempotencyCacheExpiration": "00:20:00",
+                "IdempotencyCacheMethod": "File"
             }
         ]
     },

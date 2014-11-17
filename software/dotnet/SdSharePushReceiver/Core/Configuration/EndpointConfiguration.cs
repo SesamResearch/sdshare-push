@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using SdShare.Diagnostics;
 using SdShare.Documentation;
@@ -90,13 +91,27 @@ namespace SdShare.Configuration
             {
                 var entry = Dns.GetHostEntry(Dns.GetHostName());
 
-                return new List<string>
+                string localIP = "?";
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (IPAddress ip in host.AddressList)
+                {
+                    if (ip.AddressFamily.ToString() == "InterNetwork")
+                    {
+                        localIP = ip.ToString();
+                    }
+                }
+
+                var urls = new List<string>
                 {
                     string.Format("http://localhost:{0}/", Port),
                     string.Format("http://127.0.0.1:{0}/", Port),
                     string.Format("http://{0}:{1}/", Dns.GetHostName(),Port),
                     string.Format("http://{0}:{1}/", entry.HostName, Port)
-                };
+               };
+
+                urls.AddRange(host.AddressList.Where(a => !a.ToString().Contains("::")).Select(a => string.Format("http://{0}:{1}/", a, Port)));
+
+                return urls;
             }
         }
 
@@ -162,6 +177,7 @@ namespace SdShare.Configuration
                         return map;
                     });
         }
+
         private static TimeSpan GetExpiration(ReceiverTypeElement configElement)
         {
             return string.IsNullOrWhiteSpace(configElement.IdempotencyCacheExpirationSpan) 
@@ -193,8 +209,11 @@ namespace SdShare.Configuration
                         var doc = new ReceiverDocumentation {Graph = eachPair.Key};
                         if (typeof (IdempotentFragmentReceiverWrapper) == receiver.GetType())
                         {
+                            var wrapper = (IdempotentFragmentReceiverWrapper) receiver;
+                            rcr = wrapper.WrappedReceiver;
                             doc.Idempotent = true;
-                            rcr = ((IdempotentFragmentReceiverWrapper)receiver).WrappedReceiver;
+                            doc.IdempotencyCacheMethod = wrapper.CacheMethod.ToString();
+                            doc.IdempotencyCacheExpiration = wrapper.Expiration.ToString();
                         }
 
                         doc.Type = rcr.GetType().AssemblyQualifiedName;

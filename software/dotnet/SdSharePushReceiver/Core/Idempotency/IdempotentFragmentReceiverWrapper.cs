@@ -15,6 +15,7 @@ namespace SdShare.Idempotency
 
         public IdempotentFragmentReceiverWrapper(IFragmentReceiver wrappedReceiver, TimeSpan slidingCachExpiration, CacheMethod cacheMethod)
         {
+            CacheMethod = cacheMethod;
             _wrappedReceiver = wrappedReceiver;
             _slidingCachExpiration = slidingCachExpiration;
             if (CacheMethod.File == cacheMethod)
@@ -25,6 +26,13 @@ namespace SdShare.Idempotency
             {
                 _cache = new MemoryCache("MemoryCache");
             }
+        }
+
+        public CacheMethod CacheMethod { get; private set; }
+
+        public TimeSpan Expiration
+        {
+            get { return _slidingCachExpiration; }
         }
 
         public void Receive(IEnumerable<string> resources, string graphUri, string payload)
