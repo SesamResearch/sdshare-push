@@ -47,6 +47,18 @@ namespace CoreTests.Configuration
         }
 
         [TestMethod]
+        public void GetReceivers_ReceiverWithLabels_LabelsSetCorrectly()
+        {
+            // Act
+            var receivers = EndpointConfiguration.GetConfiguredReceivers("http://test/graph/idempotent");
+
+            // Assert
+            Assert.AreEqual(2, receivers.Count());
+            Assert.IsTrue(receivers.Any(r => typeof(StubFragmentReceiverTypeA) == r.GetType()));
+            Assert.IsTrue(receivers.Any(r => typeof(IdempotentFragmentReceiverWrapper) == r.GetType()));
+        }
+
+        [TestMethod]
         public void Port_IsConfigured_GetsExpectedPort()
         {
             // Act
@@ -77,6 +89,32 @@ namespace CoreTests.Configuration
             {
                 Console.WriteLine(adress);
             }
+        }
+
+        [TestMethod]
+        public void IsIpv6_ShouldBe_Is()
+        {
+            // Arrange
+            var address = "2001:0:9d38:90d7:3ca1:5b7:53ec:75e4";
+
+            // Act
+            var isIpv6 = EndpointConfiguration.IsIpv6(address);
+
+            // Assert
+            Assert.IsTrue(isIpv6);
+        }
+
+        [TestMethod]
+        public void IsIpv6_ShouldNotBe_IsNot()
+        {
+            // Arrange
+            var address = "192.168.80.1";
+
+            // Act
+            var isIpv6 = EndpointConfiguration.IsIpv6(address);
+
+            // Assert
+            Assert.IsFalse(isIpv6);
         }
     }
 }

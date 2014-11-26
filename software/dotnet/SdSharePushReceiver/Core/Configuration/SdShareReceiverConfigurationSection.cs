@@ -79,5 +79,12 @@ namespace SdShare.Configuration
             get { return (string) this["idempotencyCacheExpirationSpan"]; }
             set { this["idempotencyCacheExpirationSpan"] = value; }
         }
+
+        [ConfigurationProperty("labels", IsRequired = false)]
+        public string Labels
+        {
+            get { return (string)this["labels"]; }
+            set { this["labels"] = value; }
+        }
     }
 }

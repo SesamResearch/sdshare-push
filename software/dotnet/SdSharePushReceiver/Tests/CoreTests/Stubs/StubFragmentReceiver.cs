@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SdShare;
 
 namespace CoreTests.Stubs
@@ -12,6 +13,11 @@ namespace CoreTests.Stubs
         public StubFragmentReceiver()
         {
             DeletedResources = new List<string>();
+        }
+
+        protected override Type LoggerNamespaceType
+        {
+            get { return typeof (StubFragmentReceiver); }
         }
 
         protected override bool SupportsBatching

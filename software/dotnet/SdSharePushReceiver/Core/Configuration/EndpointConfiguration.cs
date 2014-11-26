@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Policy;
 using System.Text;
+using NetTriple.Documentation;
 using SdShare.Diagnostics;
 using SdShare.Documentation;
 using SdShare.Idempotency;
@@ -17,6 +19,8 @@ namespace SdShare.Configuration
         private const string AllKey = "##ALL##";
         private static readonly object SyncLock = new object();
         private static Dictionary<string, List<IFragmentReceiver>> _receivers;
+        private static readonly Dictionary<IFragmentReceiver, IEnumerable<string>> _receiverLabels = new Dictionary<IFragmentReceiver, IEnumerable<string>>();
+        private static readonly Dictionary<IFragmentReceiver, string> _receiverNames = new Dictionary<IFragmentReceiver, string>(); 
         private static SdShareReceiverConfigurationSection _configSection;
 
         private static readonly TimeSpan DefaultExpiration = TimeSpan.FromHours(1);
@@ -56,7 +60,8 @@ namespace SdShare.Configuration
                     RequestCount = DiagnosticData.RequestCount,
                     ResourceCount = DiagnosticData.ResourceCount,
                     StartTimeUtc = DiagnosticData.StartTimeUtc
-                }
+                },
+                Transforms = DocumentationFinder.GetTypeDocumentation()
             };
         }
 
@@ -109,7 +114,7 @@ namespace SdShare.Configuration
                     string.Format("http://{0}:{1}/", entry.HostName, Port)
                };
 
-                urls.AddRange(host.AddressList.Where(a => !a.ToString().Contains("::")).Select(a => string.Format("http://{0}:{1}/", a, Port)));
+                urls.AddRange(host.AddressList.Where(a => !IsIpv6(a.ToString())).Select(a => string.Format("http://{0}:{1}/", a, Port)));
 
                 return urls;
             }
@@ -173,7 +178,15 @@ namespace SdShare.Configuration
                             list.Add(receiver);
                         }
 
-                        
+                        var labels = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(each.Labels))
+                        {
+                            labels.AddRange(each.Labels.Split(';'));
+                        }
+
+                        _receiverLabels[receiver] = labels;
+                        _receiverNames[receiver] = each.Name;
+
                         return map;
                     });
         }
@@ -206,7 +219,12 @@ namespace SdShare.Configuration
                     foreach (var receiver in eachPair.Value)
                     {
                         var rcr = receiver;
-                        var doc = new ReceiverDocumentation {Graph = eachPair.Key};
+                        var doc = new ReceiverDocumentation
+                        {
+                            Name = _receiverNames[receiver],
+                            Graph = eachPair.Key, 
+                            Labels = _receiverLabels[receiver]
+                        };
                         if (typeof (IdempotentFragmentReceiverWrapper) == receiver.GetType())
                         {
                             var wrapper = (IdempotentFragmentReceiverWrapper) receiver;
@@ -223,6 +241,17 @@ namespace SdShare.Configuration
                     return accumulator;
                 });
 
+        }
+
+        public static bool IsIpv6(string addr)
+        {
+            IPAddress ip;
+            if (IPAddress.TryParse(addr, out ip))
+            {
+                return ip.AddressFamily == AddressFamily.InterNetworkV6;
+            }
+
+            return false;
         }
     }
 }
