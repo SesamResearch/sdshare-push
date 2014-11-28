@@ -28,6 +28,11 @@ namespace SdShare.Service.AspNetWebApi
                 "doc",
                 new { controller = "Ping", action = "Doc" });
 
+            config.Routes.MapHttpRoute(
+                "SampleTriplesRoute",
+                "sample",
+                new { controller = "Ping", action = "Sample" });
+
             config.Services.Replace(typeof(IAssembliesResolver), new SdShareWebApiAssemblyResolver());
 
             appBuilder.UseWebApi(config);

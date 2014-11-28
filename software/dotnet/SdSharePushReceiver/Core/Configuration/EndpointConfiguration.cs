@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using NetTriple.Documentation;
@@ -61,8 +63,20 @@ namespace SdShare.Configuration
                     ResourceCount = DiagnosticData.ResourceCount,
                     StartTimeUtc = DiagnosticData.StartTimeUtc
                 },
-                Transforms = DocumentationFinder.GetTypeDocumentation()
+                Transforms = DocumentationFinder.GetTypeDocumentation(),
+                Version = GetFileVersion()
             };
+        }
+
+        public static bool IsIpv6(string addr)
+        {
+            IPAddress ip;
+            if (IPAddress.TryParse(addr, out ip))
+            {
+                return ip.AddressFamily == AddressFamily.InterNetworkV6;
+            }
+
+            return false;
         }
 
         public static string GetReport()
@@ -219,12 +233,12 @@ namespace SdShare.Configuration
                     foreach (var receiver in eachPair.Value)
                     {
                         var rcr = receiver;
+
                         var doc = new ReceiverDocumentation
                         {
-                            Name = _receiverNames[receiver],
-                            Graph = eachPair.Key, 
-                            Labels = _receiverLabels[receiver]
+                            Graph = eachPair.Key,
                         };
+
                         if (typeof (IdempotentFragmentReceiverWrapper) == receiver.GetType())
                         {
                             var wrapper = (IdempotentFragmentReceiverWrapper) receiver;
@@ -234,7 +248,12 @@ namespace SdShare.Configuration
                             doc.IdempotencyCacheExpiration = wrapper.Expiration.ToString();
                         }
 
+                        doc.Name = _receiverNames[rcr];
                         doc.Type = rcr.GetType().AssemblyQualifiedName;
+                        doc.Labels = _receiverLabels.ContainsKey(rcr)
+                            ? _receiverLabels[rcr]
+                            : new List<string>();
+
                         accumulator.Add(doc);
                     }
 
@@ -243,15 +262,11 @@ namespace SdShare.Configuration
 
         }
 
-        public static bool IsIpv6(string addr)
+        private static string GetFileVersion()
         {
-            IPAddress ip;
-            if (IPAddress.TryParse(addr, out ip))
-            {
-                return ip.AddressFamily == AddressFamily.InterNetworkV6;
-            }
-
-            return false;
+            var assembly = Assembly.GetEntryAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.FileVersion;
         }
     }
 }
