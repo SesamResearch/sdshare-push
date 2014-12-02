@@ -19,7 +19,14 @@ namespace SdShare.Service.AspNetWebApi
                 DiagnosticData.IncRequests();
 
                 var body = await Request.Content.ReadAsStringAsync();
-                foreach (var receiver in EndpointConfiguration.GetConfiguredReceivers(graph))
+
+                var receivers = EndpointConfiguration.GetConfiguredReceivers(graph);
+                if (receivers == null || !receivers.Any())
+                {
+                    throw new InvalidOperationException(string.Format("No receivers configured for graph {0}", graph));
+                }
+
+                foreach (var receiver in receivers)
                 {
                     receiver.Receive(resource, graph, body);
                 }
