@@ -34,5 +34,9 @@ namespace CoreTests.Stubs
         {
             ReceiveCoreReceived = true;
         }
+
+        protected override void OnException(Exception exception)
+        {
+        }
     }
 }

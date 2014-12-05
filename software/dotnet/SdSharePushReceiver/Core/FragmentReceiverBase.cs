@@ -9,6 +9,7 @@ namespace SdShare
     public abstract class FragmentReceiverBase : IFragmentReceiver
     {
         private Logger _logger;
+        private readonly Logger _exceptionLogger = LogManager.GetLogger("SdShare.PushReceiver.Exceptions");
 
         public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
@@ -36,6 +37,8 @@ namespace SdShare
             }
             catch (Exception e)
             {
+                OnException(e);
+
                 var rsrsc = resources == null
                     ? "NULL"
                     : resources.Aggregate(new StringBuilder(), (sb, r) =>
@@ -48,6 +51,23 @@ namespace SdShare
                 Logger.Info("Error graph: " + graphUri ?? "NULL");
                 Logger.Info(string.Format("Payload:\r\n{0}", payload));
                 Logger.ErrorException("Exception details: ", e);
+
+                _exceptionLogger.Error("STARTEXCEPTION");
+
+                _exceptionLogger.Error("STARTRESOURCES");
+                _exceptionLogger.Error(rsrsc);
+                _exceptionLogger.Error("ENDRESOURCES");
+
+                _exceptionLogger.Error("STARTPAYLOAD");
+                _exceptionLogger.Error(payload);
+                _exceptionLogger.Error("ENDPAYLOAD");
+
+                _exceptionLogger.Error("STARTDETAILS");
+                _exceptionLogger.ErrorException(rsrsc, e);
+                _exceptionLogger.Error("ENDDETAILS");
+
+                _exceptionLogger.Error("ENDEXCEPTION");
+
                 throw;
             }
         }
@@ -64,6 +84,8 @@ namespace SdShare
         protected abstract void DeleteResource(string resource);
 
         protected abstract void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload);
+
+        protected abstract void OnException(Exception exception);
 
         private void ValidateReceive(IEnumerable<string> resources, string payload)
         {
