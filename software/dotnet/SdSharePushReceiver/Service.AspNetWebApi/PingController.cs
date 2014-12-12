@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using SdShare.Configuration;
 using SdShare.Documentation;
@@ -29,6 +30,13 @@ namespace SdShare.Service.AspNetWebApi
             }
 
             return transformDoc.GetSampleNTriples();
+        }
+
+        [HttpGet]
+        public IEnumerable<ExceptionLogInfo> Exceptions()
+        {
+            var parser = new ExceptionLogParser();
+            return parser.Parse();
         }
     }
 }

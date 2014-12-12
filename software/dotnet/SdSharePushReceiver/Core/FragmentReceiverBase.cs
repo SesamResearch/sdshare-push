@@ -54,9 +54,18 @@ namespace SdShare
 
                 _exceptionLogger.Error("STARTEXCEPTION");
 
-                _exceptionLogger.Error("STARTRESOURCES");
-                _exceptionLogger.Error(rsrsc);
-                _exceptionLogger.Error("ENDRESOURCES");
+                if (resources != null)
+                {
+                    _exceptionLogger.Error("STARTRESOURCES");
+                    foreach (var resource in resources)
+                    {
+                        _exceptionLogger.Error(resource);
+                    }
+
+                    _exceptionLogger.Error("ENDRESOURCES");
+                }
+                
+                
 
                 _exceptionLogger.Error("STARTPAYLOAD");
                 _exceptionLogger.Error(payload);

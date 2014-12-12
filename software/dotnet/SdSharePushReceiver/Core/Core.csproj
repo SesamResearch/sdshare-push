@@ -84,6 +84,8 @@
     <Compile Include="Diagnostics\DiagnosticData.cs" />
     <Compile Include="Documentation\DiagnosticsDocumentation.cs" />
     <Compile Include="Documentation\EndpointDocumentation.cs" />
+    <Compile Include="Documentation\ExceptionLOgInfo.cs" />
+    <Compile Include="Documentation\ExceptionLogParser.cs" />
     <Compile Include="Documentation\ReceiverDocumentation.cs" />
     <Compile Include="Documentation\StatusDocumentation.cs" />
     <Compile Include="FragmentReceiverBase.cs" />

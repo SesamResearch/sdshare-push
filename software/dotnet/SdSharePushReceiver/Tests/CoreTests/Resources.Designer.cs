@@ -61,6 +61,27 @@ namespace CoreTests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTEXCEPTION 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTRESOURCES 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions r 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions r2 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ENDRESOURCES 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTPAYLOAD 
+        ///
+        ///2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ------WebKitFormBoundaryUl8p [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ExceptionLog {
+            get {
+                return ResourceManager.GetString("ExceptionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite/wo12345&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite&gt; .
         ///&lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite/wo12345&gt; &lt;http://psi.hafslund.no/sesam/geonis/schema/workOrder&gt; &quot;wo12345&quot; .
         ///&lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite/wo12345&gt; &lt;http://psi.hafslund.no/sesam/geonis/schema/executeImmediate&gt; true .

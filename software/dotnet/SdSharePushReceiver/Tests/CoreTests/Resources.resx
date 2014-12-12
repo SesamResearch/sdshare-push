@@ -117,6 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExceptionLog" xml:space="preserve">
+    <value>2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTEXCEPTION 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTRESOURCES 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions r 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions r2 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ENDRESOURCES 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTPAYLOAD 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ------WebKitFormBoundaryUl8pzPal3945bVSA--
+ 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ENDPAYLOAD 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions STARTDETAILS 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions resource=r&amp; resource=r2&amp;  System.InvalidOperationException: No triples for resource r.
+   at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)    at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ENDDETAILS 
+
+2014-12-05 13:27:16.9808 SdShare.PushReceiver.Exceptions ENDEXCEPTION 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTEXCEPTION 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTRESOURCES 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions r 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions r2 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDRESOURCES 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTPAYLOAD 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ------WebKitFormBoundarybhxAyOXwW6So9EAS--
+ 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDPAYLOAD 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTDETAILS 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions resource=r&amp; resource=r2&amp;  System.InvalidOperationException: No triples for resource r.
+   at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)    at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDDETAILS 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDEXCEPTION 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions STARTEXCEPTION 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions STARTRESOURCES 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions r 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions r2 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions ENDRESOURCES 
+
+2014-12-05 13:27:41.1170 SdShare.PushReceiver.Exceptions STARTPAYLOAD 
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions ------WebKitFormBoundaryuYJNRcBHfQlhC5ai--
+ 
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions ENDPAYLOAD 
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions STARTDETAILS 
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions resource=r&amp; resource=r2&amp;  System.InvalidOperationException: No triples for resource r.
+   at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)    at SdShare.FragmentReceiverBase.ValidateReceive(IEnumerable`1 resources, String payload)
+   at SdShare.FragmentReceiverBase.Receive(IEnumerable`1 resources, String graphUri, String payload)
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions ENDDETAILS 
+
+2014-12-05 13:27:41.1210 SdShare.PushReceiver.Exceptions ENDEXCEPTION</value>
+  </data>
   <data name="Triples" xml:space="preserve">
     <value>&lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite/wo12345&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite&gt; .
 &lt;http://psi.hafslund.no/sesam/geonis/updateDeliverySite/wo12345&gt; &lt;http://psi.hafslund.no/sesam/geonis/schema/workOrder&gt; "wo12345" .

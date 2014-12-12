@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Owin;
+using SdShare.Service.AspNetWebApi.SdShare;
 
 namespace SdShare.Service.AspNetWebApi
 {
@@ -33,7 +34,18 @@ namespace SdShare.Service.AspNetWebApi
                 "sample",
                 new { controller = "Ping", action = "Sample" });
 
+            config.Routes.MapHttpRoute(
+                "ExceptionsRoute",
+                "exceptions",
+                new { controller = "Ping", action = "Exceptions" });
+
+            config.Routes.MapHttpRoute(
+                "SdShareCollectionsRoute",
+                "collections",
+                new { controller = "SdShare", action = "Collections" });
+
             config.Services.Replace(typeof(IAssembliesResolver), new SdShareWebApiAssemblyResolver());
+            //config.Formatters.Add(new SyndicationFeedFormatter());
 
             appBuilder.UseWebApi(config);
         }

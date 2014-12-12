@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Configuration\EndpointConfigurationTests.cs" />
     <Compile Include="Configuration\SdShareReceiverConfigurationSectionTests.cs" />
+    <Compile Include="Documentation\ExceptionLogParserTests.cs" />
     <Compile Include="FragmentReceiverBaseTests.cs" />
     <Compile Include="Idempotency\HowDoesHashCodingWork.cs" />
     <Compile Include="Idempotency\IdempotentFragmentReceiverWrapperTests.cs" />

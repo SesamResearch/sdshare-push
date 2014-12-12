@@ -90,6 +90,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NetTriple.1.0.33\lib\System.Reflection.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Http, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.0\lib\net45\System.Web.Http.dll</HintPath>
@@ -109,7 +110,12 @@
     <Compile Include="DataSinkController.cs" />
     <Compile Include="PingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SdShareController.cs" />
     <Compile Include="SdShareWebApiAssemblyResolver.cs" />
+    <Compile Include="SdShare\IUrlRepository.cs" />
+    <Compile Include="SdShare\SyndicationFeedFormatter.cs" />
+    <Compile Include="SdShare\Url.cs" />
+    <Compile Include="SdShare\UrlRepository.cs" />
     <Compile Include="SetUpConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
