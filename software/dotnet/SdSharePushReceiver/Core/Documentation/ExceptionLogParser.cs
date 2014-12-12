@@ -23,6 +23,7 @@ namespace SdShare.Documentation
             {
                 return new List<ExceptionLogInfo>();
             }
+
             return Parse(File.ReadAllLines(LogFile));
         }
 
@@ -51,6 +52,12 @@ namespace SdShare.Documentation
                 if (line.Contains("STARTPAYLOAD"))
                 {
                     i = ParsePayload(i, current, lines);
+                    continue;
+                }
+
+                if (line.Contains("STARTTARGETPAYLOAD"))
+                {
+                    i = ParseTargetPayload(i, current, lines);
                     continue;
                 }
 
@@ -110,6 +117,31 @@ namespace SdShare.Documentation
             } while (!done);
 
             current.Payload = sb.ToString();
+            return i;
+        }
+
+        private int ParseTargetPayload(int i, ExceptionLogInfo current, IList<string> lines)
+        {
+            i++;
+            var done = false;
+            var sb = new StringBuilder();
+            do
+            {
+                var line = lines[i];
+                done = line.Contains("ENDTARGETPAYLOAD");
+                if (!done)
+                {
+                    var wl = WashLine(line);
+                    if (wl != null)
+                    {
+                        sb.AppendLine(wl);
+                    }
+                }
+
+                i++;
+            } while (!done);
+
+            current.TargetPayload = sb.ToString();
             return i;
         }
 

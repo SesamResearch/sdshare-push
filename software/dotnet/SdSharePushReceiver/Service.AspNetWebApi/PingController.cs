@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using SdShare.Configuration;
@@ -33,10 +34,16 @@ namespace SdShare.Service.AspNetWebApi
         }
 
         [HttpGet]
-        public IEnumerable<ExceptionLogInfo> Exceptions()
+        public IEnumerable<ExceptionLogInfo> Exceptions(string after = null)
         {
-            var parser = new ExceptionLogParser();
-            return parser.Parse();
+            return ExceptionLogs.GetExceptions(GetDateTime(after));
+        }
+
+        private DateTime GetDateTime(string after)
+        {
+            return string.IsNullOrWhiteSpace(after)
+                ? DateTime.MinValue
+                : DateTime.Parse(after);
         }
     }
 }

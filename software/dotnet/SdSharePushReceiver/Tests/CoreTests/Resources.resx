@@ -163,6 +163,12 @@
 
 2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDPAYLOAD 
 
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTTARGETPAYLOAD 
+
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ==TARGETPAYLOAD
+ 
+2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions ENDTARGETPAYLOAD 
+
 2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions STARTDETAILS 
 
 2014-12-05 13:27:39.4378 SdShare.PushReceiver.Exceptions resource=r&amp; resource=r2&amp;  System.InvalidOperationException: No triples for resource r.

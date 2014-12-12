@@ -9,5 +9,6 @@ namespace SdShare.Documentation
         public IEnumerable<string> Resources { get; set; }
         public string Payload { get; set; }
         public string ExceptionDetails { get; set; }
+        public string TargetPayload { get; set; }
     }
 }

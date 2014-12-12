@@ -10,9 +10,13 @@ namespace SdShare
     {
         private Logger _logger;
         private readonly Logger _exceptionLogger = LogManager.GetLogger("SdShare.PushReceiver.Exceptions");
+        private readonly Dictionary<string, string> _targetPayloadMap = new Dictionary<string, string>();
+        private readonly object _syncLock = new object();
 
         public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
+            var invocationKey = Guid.NewGuid().ToString();
+
             try
             {
                 var rsrcs = ValidateResources(resources);
@@ -32,7 +36,7 @@ namespace SdShare
                 else
                 {
                     ValidateReceive(rsrcs, payload);
-                    ReceiveCore(rsrcs, graphUri, payload);
+                    ReceiveCore(invocationKey, rsrcs, graphUri, payload);
                 }
             }
             catch (Exception e)
@@ -64,12 +68,18 @@ namespace SdShare
 
                     _exceptionLogger.Error("ENDRESOURCES");
                 }
-                
-                
 
                 _exceptionLogger.Error("STARTPAYLOAD");
                 _exceptionLogger.Error(payload);
                 _exceptionLogger.Error("ENDPAYLOAD");
+
+                var targetPayload = GetReportedTargetPayload(invocationKey);
+                if (!string.IsNullOrWhiteSpace(targetPayload))
+                {
+                    _exceptionLogger.Error("STARTTARGETPAYLOAD");
+                    _exceptionLogger.Error(targetPayload);
+                    _exceptionLogger.Error("ENDTARGETPAYLOAD");
+                }
 
                 _exceptionLogger.Error("STARTDETAILS");
                 _exceptionLogger.ErrorException(rsrsc, e);
@@ -92,9 +102,22 @@ namespace SdShare
 
         protected abstract void DeleteResource(string resource);
 
-        protected abstract void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload);
+        protected abstract void ReceiveCore(string invocationKey, IEnumerable<string> resources, string graphUri, string payload);
 
         protected abstract void OnException(Exception exception);
+
+        protected void ReportTargetPayloadOnError(string invocationKey, string targetPayload)
+        {
+            if (string.IsNullOrWhiteSpace(invocationKey) || string.IsNullOrWhiteSpace(targetPayload))
+            {
+                return;
+            }
+
+            lock (_syncLock)
+            {
+                _targetPayloadMap[invocationKey] = targetPayload;
+            }
+        }
 
         private void ValidateReceive(IEnumerable<string> resources, string payload)
         {
@@ -120,6 +143,22 @@ namespace SdShare
             }
 
             return rsrcs;
+        }
+
+        private string GetReportedTargetPayload(string invocationKey)
+        {
+            if (!_targetPayloadMap.ContainsKey(invocationKey))
+            {
+                return null;
+            }
+
+            var payload = _targetPayloadMap[invocationKey];
+            lock (_syncLock)
+            {
+                _targetPayloadMap.Remove(invocationKey);
+            }
+
+            return payload;
         }
     }
 }
