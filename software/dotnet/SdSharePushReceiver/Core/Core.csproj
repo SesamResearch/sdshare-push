@@ -89,6 +89,8 @@
     <Compile Include="Documentation\ExceptionLogs.cs" />
     <Compile Include="Documentation\ReceiverDocumentation.cs" />
     <Compile Include="Documentation\StatusDocumentation.cs" />
+    <Compile Include="Exceptions\ExceptionWriter.cs" />
+    <Compile Include="Exceptions\MissingGraphException.cs" />
     <Compile Include="FragmentReceiverBase.cs" />
     <Compile Include="Idempotency\CacheMethod.cs" />
     <Compile Include="Idempotency\IdempotentFragmentReceiverWrapper.cs" />

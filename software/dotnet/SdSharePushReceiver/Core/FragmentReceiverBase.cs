@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NLog;
+using SdShare.Exceptions;
 
 namespace SdShare
 {
     public abstract class FragmentReceiverBase : IFragmentReceiver
     {
         private Logger _logger;
-        private readonly Logger _exceptionLogger = LogManager.GetLogger("SdShare.PushReceiver.Exceptions");
-        private readonly Dictionary<string, string> _targetPayloadMap = new Dictionary<string, string>();
-        private readonly object _syncLock = new object();
 
         public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
-            var invocationKey = Guid.NewGuid().ToString();
-
             try
             {
                 var rsrcs = ValidateResources(resources);
@@ -36,7 +32,7 @@ namespace SdShare
                 else
                 {
                     ValidateReceive(rsrcs, payload);
-                    ReceiveCore(invocationKey, rsrcs, graphUri, payload);
+                    ReceiveCore(rsrcs, graphUri, payload);
                 }
             }
             catch (Exception e)
@@ -56,36 +52,7 @@ namespace SdShare
                 Logger.Info(string.Format("Payload:\r\n{0}", payload));
                 Logger.ErrorException("Exception details: ", e);
 
-                _exceptionLogger.Error("STARTEXCEPTION");
-
-                if (resources != null)
-                {
-                    _exceptionLogger.Error("STARTRESOURCES");
-                    foreach (var resource in resources)
-                    {
-                        _exceptionLogger.Error(resource);
-                    }
-
-                    _exceptionLogger.Error("ENDRESOURCES");
-                }
-
-                _exceptionLogger.Error("STARTPAYLOAD");
-                _exceptionLogger.Error(payload);
-                _exceptionLogger.Error("ENDPAYLOAD");
-
-                var targetPayload = GetReportedTargetPayload(invocationKey);
-                if (!string.IsNullOrWhiteSpace(targetPayload))
-                {
-                    _exceptionLogger.Error("STARTTARGETPAYLOAD");
-                    _exceptionLogger.Error(targetPayload);
-                    _exceptionLogger.Error("ENDTARGETPAYLOAD");
-                }
-
-                _exceptionLogger.Error("STARTDETAILS");
-                _exceptionLogger.ErrorException(rsrsc, e);
-                _exceptionLogger.Error("ENDDETAILS");
-
-                _exceptionLogger.Error("ENDEXCEPTION");
+                ExceptionWriter.Write(e, resources, payload);
 
                 throw;
             }
@@ -102,22 +69,9 @@ namespace SdShare
 
         protected abstract void DeleteResource(string resource);
 
-        protected abstract void ReceiveCore(string invocationKey, IEnumerable<string> resources, string graphUri, string payload);
+        protected abstract void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload);
 
         protected abstract void OnException(Exception exception);
-
-        protected void ReportTargetPayloadOnError(string invocationKey, string targetPayload)
-        {
-            if (string.IsNullOrWhiteSpace(invocationKey) || string.IsNullOrWhiteSpace(targetPayload))
-            {
-                return;
-            }
-
-            lock (_syncLock)
-            {
-                _targetPayloadMap[invocationKey] = targetPayload;
-            }
-        }
 
         private void ValidateReceive(IEnumerable<string> resources, string payload)
         {
@@ -143,22 +97,6 @@ namespace SdShare
             }
 
             return rsrcs;
-        }
-
-        private string GetReportedTargetPayload(string invocationKey)
-        {
-            if (!_targetPayloadMap.ContainsKey(invocationKey))
-            {
-                return null;
-            }
-
-            var payload = _targetPayloadMap[invocationKey];
-            lock (_syncLock)
-            {
-                _targetPayloadMap.Remove(invocationKey);
-            }
-
-            return payload;
         }
     }
 }

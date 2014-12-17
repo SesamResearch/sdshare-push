@@ -30,7 +30,7 @@ namespace CoreTests.Stubs
             DeletedResources.Add(resource);
         }
 
-        protected override void ReceiveCore(string invocationKey, IEnumerable<string> resources, string graphUri, string payload)
+        protected override void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload)
         {
             ReceiveCoreReceived = true;
         }

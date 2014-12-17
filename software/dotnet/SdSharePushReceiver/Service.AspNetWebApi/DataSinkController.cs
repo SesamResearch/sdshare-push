@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using SdShare.Configuration;
 using SdShare.Diagnostics;
+using SdShare.Exceptions;
 
 namespace SdShare.Service.AspNetWebApi
 {
@@ -23,7 +24,7 @@ namespace SdShare.Service.AspNetWebApi
                 var receivers = EndpointConfiguration.GetConfiguredReceivers(graph);
                 if (receivers == null || !receivers.Any())
                 {
-                    throw new InvalidOperationException(string.Format("No receivers configured for graph {0}", graph));
+                    throw new MissingGraphException(string.Format("No receivers configured for graph {0}", graph));
                 }
 
                 foreach (var receiver in receivers)
@@ -33,6 +34,13 @@ namespace SdShare.Service.AspNetWebApi
 
                 DiagnosticData.IncResources(resource.Count);
                 return Ok();
+            }
+            catch (MissingGraphException mge)
+            {
+                ExceptionWriter.Write(mge, resource, null);
+
+                DiagnosticData.IncErrors();
+                return InternalServerError(mge);
             }
             catch (Exception e)
             {
