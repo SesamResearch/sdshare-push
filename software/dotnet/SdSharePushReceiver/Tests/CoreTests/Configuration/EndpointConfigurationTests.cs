@@ -59,6 +59,19 @@ namespace CoreTests.Configuration
         }
 
         [TestMethod]
+        public void GetReceivers_ReceiverWithLabels_LabelsSetCorrectlyOnReceiver()
+        {
+            // Act
+            var receiver = EndpointConfiguration.GetConfiguredReceivers("http://test/graph")
+                                .Single(r => r is StubFragmentReceiverTypeB);
+
+            // Assert
+            Assert.AreEqual(2, receiver.Labels.Count());
+            Assert.IsTrue(receiver.Labels.Contains("XX1"));
+            Assert.IsTrue(receiver.Labels.Contains("XX2"));
+        }
+
+        [TestMethod]
         public void Port_IsConfigured_GetsExpectedPort()
         {
             // Act

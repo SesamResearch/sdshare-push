@@ -44,6 +44,8 @@ namespace SdShare.Idempotency
             }
         }
 
+        public IEnumerable<string> Labels { get; set; }
+
         public IFragmentReceiver WrappedReceiver
         {
             get { return _wrappedReceiver; }

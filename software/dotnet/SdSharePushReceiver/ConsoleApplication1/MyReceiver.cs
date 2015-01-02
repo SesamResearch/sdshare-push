@@ -37,5 +37,7 @@ namespace ServiceRunner
             
             Console.WriteLine("==== ==== ==== ==== ==== ==== ==== ====");
         }
+
+        public IEnumerable<string> Labels { get; set; }
     }
 }

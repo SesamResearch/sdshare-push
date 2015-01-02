@@ -198,6 +198,7 @@ namespace SdShare.Configuration
                             labels.AddRange(each.Labels.Split(';'));
                         }
 
+                        receiver.Labels = labels;
                         _receiverLabels[receiver] = labels;
                         _receiverNames[receiver] = each.Name;
 

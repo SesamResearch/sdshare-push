@@ -58,6 +58,8 @@ namespace SdShare
             }
         }
 
+        public IEnumerable<string> Labels { get; set; }
+
         protected abstract Type LoggerNamespaceType { get; }
 
         protected Logger Logger

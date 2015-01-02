@@ -37,5 +37,7 @@ namespace TestHost
             
             Console.WriteLine("==== ==== ==== ==== ==== ==== ==== ====");
         }
+
+        public IEnumerable<string> Labels { get; set; }
     }
 }

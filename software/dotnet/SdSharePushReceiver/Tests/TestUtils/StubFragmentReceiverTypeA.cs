@@ -9,5 +9,7 @@ namespace TestUtils
         {
             ReceivedFragmentInvocations.IncTypeA();
         }
+
+        public IEnumerable<string> Labels { get; set; }
     }
 }
