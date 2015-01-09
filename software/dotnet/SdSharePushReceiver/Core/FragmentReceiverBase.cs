@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using Mindscape.Raygun4Net;
+using NetTriple;
 using NLog;
 using SdShare.Exceptions;
 
@@ -10,6 +13,10 @@ namespace SdShare
     public abstract class FragmentReceiverBase : IFragmentReceiver
     {
         private Logger _logger;
+
+        private readonly string _raygunApiKey = ConfigurationManager.AppSettings["Raygun.Api.Key"];
+        private readonly RaygunClient _raygunClient = new RaygunClient(ConfigurationManager.AppSettings["Raygun.Api.Key"]);
+        private readonly List<string> _errorTags = new List<string>(); 
 
         public void Receive(IEnumerable<string> resources, string graphUri, string payload)
         {
@@ -37,7 +44,9 @@ namespace SdShare
             }
             catch (Exception e)
             {
-                OnException(e);
+                OnException(e, resources, graphUri, payload);
+
+                SendToRaygun(e, resources, graphUri);
 
                 var rsrsc = resources == null
                     ? "NULL"
@@ -73,7 +82,25 @@ namespace SdShare
 
         protected abstract void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload);
 
-        protected abstract void OnException(Exception exception);
+        protected abstract void OnException(Exception exception, IEnumerable<string> resources, string graphUri, string payload);
+
+        protected IEnumerable<object> GetObjects(string payload)
+        {
+            var triples = payload.ToTriplesFromNTriples().ToList();
+            var unknowns = new List<string>();
+            var objects = triples.ToObjects(unknowns);
+            ExceptionWriter.WriteOrphans(unknowns);
+            return objects;
+        }
+
+        protected T GetObject<T>(string payload)
+        {
+            var triples = payload.ToTriplesFromNTriples().ToList();
+            var unknowns = new List<string>();
+            var obj = triples.ToObject<T>(unknowns);
+            ExceptionWriter.WriteOrphans(unknowns);
+            return obj;
+        }
 
         private void ValidateReceive(IEnumerable<string> resources, string payload)
         {
@@ -99,6 +126,41 @@ namespace SdShare
             }
 
             return rsrcs;
+        }
+
+        private void SendToRaygun(Exception exception, IEnumerable<string> resources, string graphUri)
+        {
+            if (string.IsNullOrWhiteSpace(_raygunApiKey))
+            {
+                return;
+            }
+
+            if (_errorTags.Count == 0)
+            {
+                _errorTags.AddRange(Labels);
+
+                if (ConfigurationManager.AppSettings.AllKeys.Contains("ServiceName"))
+                {
+                    _errorTags.Add(ConfigurationManager.AppSettings["ServiceName"]);
+                }
+            }
+
+            var rscrs = resources == null || resources.Count() == 0
+                ? "MISSING"
+                : resources.Aggregate(new StringBuilder(), (sb, r) =>
+                {
+                    sb.Append(r);
+                    sb.Append(";");
+                    return sb;
+                }).ToString();
+
+            var customData = new Dictionary<string, string>()
+            {
+                {"resources", rscrs},
+                {"graph", graphUri ?? "NONE"}
+            };
+
+            _raygunClient.Send(exception, _errorTags, customData);
         }
     }
 }

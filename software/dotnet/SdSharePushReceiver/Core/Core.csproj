@@ -36,23 +36,27 @@
       <HintPath>..\packages\FileCache.1.4.0\lib\FileCache.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=0.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetTriple.1.0.33\lib\Microsoft.CodeAnalysis.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=0.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp.Desktop, Version=0.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\Microsoft.CodeAnalysis.CSharp.Desktop.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\Microsoft.CodeAnalysis.CSharp.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.Desktop, Version=0.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\Microsoft.CodeAnalysis.Desktop.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\Microsoft.CodeAnalysis.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.Raygun4Net">
+      <HintPath>..\packages\Mindscape.Raygun4Net.4.1.0\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
     </Reference>
     <Reference Include="NetTriple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\NetTriple.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\NetTriple.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
@@ -63,13 +67,13 @@
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.20.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\System.Collections.Immutable.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reflection.Metadata, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NetTriple.1.0.33\lib\System.Reflection.Metadata.dll</HintPath>
+      <HintPath>..\packages\NetTriple.1.0.40\lib\System.Reflection.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />

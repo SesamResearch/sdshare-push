@@ -9,6 +9,7 @@ namespace SdShare.Exceptions
     public static class ExceptionWriter
     {
         private static readonly Logger ExceptionLogger = LogManager.GetLogger("SdShare.PushReceiver.Exceptions");
+        private static readonly Logger OrphanLogger = LogManager.GetLogger("SdShare.PushReceiver.Orphans");
 
         public static void Write(Exception exception, IEnumerable<string> resources, string payload)
         {
@@ -37,19 +38,24 @@ namespace SdShare.Exceptions
             ExceptionLogger.Error(payload ?? string.Empty);
             ExceptionLogger.Error("ENDPAYLOAD");
 
-            //var targetPayload = GetReportedTargetPayload(invocationKey);
-            //if (!string.IsNullOrWhiteSpace(targetPayload))
-            //{
-            //    _exceptionLogger.Error("STARTTARGETPAYLOAD");
-            //    _exceptionLogger.Error(targetPayload);
-            //    _exceptionLogger.Error("ENDTARGETPAYLOAD");
-            //}
-
             ExceptionLogger.Error("STARTDETAILS");
             ExceptionLogger.ErrorException(rsrsc, exception);
             ExceptionLogger.Error("ENDDETAILS");
 
             ExceptionLogger.Error("ENDEXCEPTION");
+        }
+
+        public static void WriteOrphans(IEnumerable<string> orphans)
+        {
+            if (orphans == null)
+            {
+                return;
+            }
+
+            foreach (var orphan in orphans)
+            {
+                OrphanLogger.Warn(orphan);
+            }
         }
     }
 }

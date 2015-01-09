@@ -35,7 +35,7 @@ namespace CoreTests.Stubs
             ReceiveCoreReceived = true;
         }
 
-        protected override void OnException(Exception exception)
+        protected override void OnException(Exception exception, IEnumerable<string> resources, string graphUri, string payload)
         {
         }
     }
