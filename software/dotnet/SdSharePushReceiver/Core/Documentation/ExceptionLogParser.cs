@@ -38,7 +38,7 @@ namespace SdShare.Documentation
                 if (line.Contains("STARTEXCEPTION"))
                 {
                     var m = _regexDatePrefix.Match(line);
-                    current = new ExceptionLogInfo {Time = DateTime.Parse(line.Substring(m.Index, m.Length))};
+                    current = new ExceptionLogInfo {TimeUtc = DateTime.Parse(line.Substring(m.Index, m.Length))};
                     result.Add(current);
                     continue;
                 }

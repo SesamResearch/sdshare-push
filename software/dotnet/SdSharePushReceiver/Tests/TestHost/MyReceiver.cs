@@ -6,9 +6,23 @@ using SdShare;
 
 namespace TestHost
 {
-    public class MyReceiver : IFragmentReceiver
+    public class MyReceiver : FragmentReceiverBase
     {
-        public void Receive(IEnumerable<string> resources, string graphUri, string payload)
+        protected override Type LoggerNamespaceType
+        {
+            get { return GetType(); }
+        }
+
+        protected override bool SupportsBatching
+        {
+            get { return true; }
+        }
+
+        protected override void DeleteResource(string resource)
+        {
+        }
+
+        protected override void ReceiveCore(IEnumerable<string> resources, string graphUri, string payload)
         {
             Console.WriteLine("Handling incoming request.");
             Console.WriteLine("Resource: {0}", resources.Aggregate(new StringBuilder(), (sb, r) =>
@@ -34,10 +48,12 @@ namespace TestHost
             {
                 Console.WriteLine("Payload: {0}", washedPayload);
             }
-            
+
             Console.WriteLine("==== ==== ==== ==== ==== ==== ==== ====");
         }
 
-        public IEnumerable<string> Labels { get; set; }
+        protected override void OnException(Exception exception, IEnumerable<string> resources, string graphUri, string payload)
+        {
+        }
     }
 }

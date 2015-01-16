@@ -9,5 +9,6 @@ namespace SdShare.Documentation
         public DiagnosticsDocumentation Diagnostics { get; set; }
         public IEnumerable<TypeTransformDocumentation> Transforms { get; set; }
         public string Version { get; set; }
+        public IEnumerable<string> Flows { get; set; }
     }
 }

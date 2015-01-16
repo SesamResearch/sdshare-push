@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using Microsoft.Owin.Hosting;
+using NetTriple;
 using SdShare.Configuration;
+using SdShare.Metadata;
 using SdShare.Service.AspNetWebApi;
 
 namespace ServiceRunner
@@ -10,6 +13,8 @@ namespace ServiceRunner
     {
         static void Main(string[] args)
         {
+            LoadAllRdfClasses.LoadTransforms(MetaProvider.GetTransforms().ToArray());
+
             var port = EndpointConfiguration.Port;
 
             var options = new StartOptions();
@@ -24,8 +29,6 @@ namespace ServiceRunner
                 Console.WriteLine(EndpointConfiguration.GetReport());
                 Console.ReadLine(); 
             }
-
-
         }
     }
 }

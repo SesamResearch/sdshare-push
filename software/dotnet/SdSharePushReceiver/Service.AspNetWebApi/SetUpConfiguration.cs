@@ -35,9 +35,14 @@ namespace SdShare.Service.AspNetWebApi
                 new { controller = "Ping", action = "Sample" });
 
             config.Routes.MapHttpRoute(
+               "MetaRoute",
+               "sample",
+               new { controller = "Ping", action = "Sample" });
+
+            config.Routes.MapHttpRoute(
                 "ExceptionsRoute",
-                "exceptions",
-                new { controller = "Ping", action = "Exceptions" });
+                "meta",
+                new { controller = "Ping", action = "Meta" });
 
             config.Routes.MapHttpRoute(
                 "SdShareCollectionsRoute",

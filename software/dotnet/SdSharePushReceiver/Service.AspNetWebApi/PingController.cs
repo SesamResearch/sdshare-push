@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using SdShare.Configuration;
 using SdShare.Documentation;
+using SdShare.Metadata;
 
 namespace SdShare.Service.AspNetWebApi
 {
@@ -37,6 +38,12 @@ namespace SdShare.Service.AspNetWebApi
         public IEnumerable<ExceptionLogInfo> Exceptions(string after = null)
         {
             return ExceptionLogs.GetExceptions(GetDateTime(after));
+        }
+
+        [HttpGet]
+        public string Meta(string since = null)
+        {
+            return MetaProvider.GetChanges(GetDateTime(since));
         }
 
         private DateTime GetDateTime(string after)

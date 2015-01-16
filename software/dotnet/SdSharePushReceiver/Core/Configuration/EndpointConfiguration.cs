@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using NetTriple.Documentation;
 using SdShare.Diagnostics;
 using SdShare.Documentation;
@@ -17,6 +17,7 @@ namespace SdShare.Configuration
 {
     public static class EndpointConfiguration
     {
+        private const string FlowPattern = @"[A-Z,Æ,Ø,Å]*-((\bINN\b)|(\bUT\b))-[0-9]*";
         private const string SectionName = "SdShareReceiverConfigurationSection";
         private const string AllKey = "##ALL##";
         private static readonly object SyncLock = new object();
@@ -24,9 +25,31 @@ namespace SdShare.Configuration
         private static readonly Dictionary<IFragmentReceiver, IEnumerable<string>> _receiverLabels = new Dictionary<IFragmentReceiver, IEnumerable<string>>();
         private static readonly Dictionary<IFragmentReceiver, string> _receiverNames = new Dictionary<IFragmentReceiver, string>(); 
         private static SdShareReceiverConfigurationSection _configSection;
+        private static readonly List<string> _flowNames = new List<string>();
 
         private static readonly TimeSpan DefaultExpiration = TimeSpan.FromHours(1);
         private const CacheMethod DefaultCacheMethod = Idempotency.CacheMethod.Memory;
+
+        public static string Flows 
+        {
+            get
+            {
+                var started = false;
+                return _flowNames.Aggregate(
+                    new StringBuilder(),
+                    (sb, flow) =>
+                    {
+                        if (started)
+                        {
+                            sb.Append(";");
+                        }
+
+                        started = true;
+                        sb.Append(flow);
+                        return sb;
+                    }).ToString();
+            }
+        }
 
         public static IEnumerable<IFragmentReceiver> GetConfiguredReceivers(string graphUri)
         {
@@ -64,7 +87,8 @@ namespace SdShare.Configuration
                     StartTimeUtc = DiagnosticData.StartTimeUtc
                 },
                 Transforms = DocumentationFinder.GetTypeDocumentation(),
-                Version = GetFileVersion()
+                Version = GetFileVersion(),
+                Flows = _flowNames
             };
         }
 
@@ -149,6 +173,29 @@ namespace SdShare.Configuration
                 }
 
                 _receivers = ReadReceivers();
+                SetFlows();
+            }
+        }
+
+        private static void SetFlows()
+        {
+            var rgx = new Regex(FlowPattern);
+
+            foreach (var receiverList in _receivers)
+            {
+                foreach (var receiver in receiverList.Value)
+                {
+                    foreach (var lbl in receiver.Labels ?? new List<string>())
+                    {
+                        if (rgx.IsMatch(lbl))
+                        {
+                            if (!_flowNames.Contains(lbl))
+                            {
+                                _flowNames.Add(lbl);
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SdShare.Metadata;
 
 namespace SdShare.Documentation
 {
@@ -21,13 +20,18 @@ namespace SdShare.Documentation
             lock (_syncLock)
             {
                 var parser = new ExceptionLogParser();
-                foreach (var logInfo in parser.Parse().Where(logInfo => !_exceptions.ContainsKey(logInfo.Time)))
+                foreach (var logInfo in parser.Parse().Where(logInfo => !_exceptions.ContainsKey(logInfo.TimeUtc)))
                 {
-                    _exceptions[logInfo.Time] = logInfo;
+                    _exceptions[logInfo.TimeUtc] = logInfo;
                 }
             }
 
             return _exceptions.Where(pair => pair.Key > after).Select(pair => pair.Value);
         }
+
+        public static IEnumerable<IMetadata> GetExceptionMetadata(DateTime since)
+        {
+            return GetExceptions(since).Select(ex => new ExceptionLogMetaElement(ex));
+        } 
     }
 }
