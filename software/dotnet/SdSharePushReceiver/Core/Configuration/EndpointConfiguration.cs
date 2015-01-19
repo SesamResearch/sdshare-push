@@ -310,7 +310,7 @@ namespace SdShare.Configuration
 
         }
 
-        private static string GetFileVersion()
+        public static string GetFileVersion()
         {
             var assembly = Assembly.GetEntryAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);

@@ -19,7 +19,7 @@ namespace SdShare.Diagnostics
         {
             get
             {
-                var subject = string.Format("http://psi.hafslund.no/sesam/meta/diagnostics/{0}", Id);
+                var subject = string.Format("<http://psi.hafslund.no/sesam/meta/diagnostics/{0}>", Id);
                 var triples = new List<Triple>
                 {
                     new Triple{Subject = subject, Predicate = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>", Object = "<http://psi.hafslund.no/sesam/meta/Diagnostics>"},

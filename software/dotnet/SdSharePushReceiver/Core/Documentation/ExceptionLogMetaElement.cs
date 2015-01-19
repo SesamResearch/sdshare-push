@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NetTriple;
 using NetTriple.Emit;
+using SdShare.Configuration;
 using SdShare.Metadata;
 
 namespace SdShare.Documentation
@@ -20,7 +21,7 @@ namespace SdShare.Documentation
             Payload = ex.Payload.Compress();
             ExceptionDetails = ex.ExceptionDetails.Compress();
             TargetPayload = ex.TargetPayload.Compress();
-            Flows = ex.Flows;
+            Flows = EndpointConfiguration.Flows; ;
         }
 
         public string Id { get; set; }
@@ -35,7 +36,7 @@ namespace SdShare.Documentation
         {
             get
             {
-                var subject = string.Format("http://psi.hafslund.no/sesam/meta/exception/{0}", Id);
+                var subject = string.Format("<http://psi.hafslund.no/sesam/meta/exception/{0}>", Id);
                 var triples = new List<Triple>
                 {
                     new Triple{Subject = subject, Predicate = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>", Object = "<http://psi.hafslund.no/sesam/meta/Exception>"},
@@ -65,7 +66,7 @@ namespace SdShare.Documentation
 
                 if (!string.IsNullOrWhiteSpace(Flows))
                 {
-                    triples.Add(new Triple { Subject = subject, Predicate = "<http://psi.hafslund.no/sesam/meta/exception/lows>", Object = Flows.ToTripleObject() });
+                    triples.Add(new Triple { Subject = subject, Predicate = "<http://psi.hafslund.no/sesam/meta/exception/flows>", Object = Flows.ToTripleObject() });
                 }
 
                 return triples;

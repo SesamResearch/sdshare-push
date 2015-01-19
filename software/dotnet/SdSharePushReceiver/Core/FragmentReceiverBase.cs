@@ -93,6 +93,15 @@ namespace SdShare
             return objects;
         }
 
+        protected IDictionary<string, object> GetInflationContext(string payload)
+        {
+            var triples = payload.ToTriplesFromNTriples().ToList();
+            var unknowns = new List<string>();
+            var context = triples.GetInflationContext(unknowns);
+            ExceptionWriter.WriteOrphans(unknowns);
+            return context.GetAllSubjectEntityPair();
+        }
+
         protected T GetObject<T>(string payload)
         {
             var triples = payload.ToTriplesFromNTriples().ToList();
