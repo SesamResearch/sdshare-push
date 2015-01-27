@@ -9,6 +9,7 @@ namespace SdShare.Documentation
     {
         private static readonly Dictionary<DateTime, ExceptionLogInfo> _exceptions = new Dictionary<DateTime, ExceptionLogInfo>();
         private static readonly object _syncLock = new object();
+        private static DateTime _logFileLastWritten = DateTime.MinValue;
 
         public static IEnumerable<ExceptionLogInfo> GetExceptions()
         {
@@ -20,9 +21,13 @@ namespace SdShare.Documentation
             lock (_syncLock)
             {
                 var parser = new ExceptionLogParser();
-                foreach (var logInfo in parser.Parse().Where(logInfo => !_exceptions.ContainsKey(logInfo.TimeUtc)))
+                if (parser.GetLogFileLastWritten() > _logFileLastWritten)
                 {
-                    _exceptions[logInfo.TimeUtc] = logInfo;
+                    _logFileLastWritten = parser.GetLogFileLastWritten();
+                    foreach (var logInfo in parser.Parse().Where(logInfo => !_exceptions.ContainsKey(logInfo.TimeUtc)))
+                    {
+                        _exceptions[logInfo.TimeUtc] = logInfo;
+                    }
                 }
             }
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using NodaTime;
 
 namespace SdShare.Documentation
 {
@@ -68,6 +69,13 @@ namespace SdShare.Documentation
             }
 
             return result;
+        }
+
+        public DateTime GetLogFileLastWritten()
+        {
+            return File.Exists(LogFile) 
+                ? File.GetLastWriteTimeUtc(LogFile)
+                : DateTime.MinValue;
         }
 
         private int ParseExceptionDetails(int i, ExceptionLogInfo current, IList<string> lines)
